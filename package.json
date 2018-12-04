@@ -1,12 +1,24 @@
 {
   "name": "BYOB",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jstewart3313/BYOB.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jstewart3313/BYOB/issues"
+  },
+  "homepage": "https://github.com/Jstewart3313/BYOB#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }

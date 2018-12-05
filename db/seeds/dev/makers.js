@@ -1,4 +1,3 @@
-const vehicleData  = require('../../../data/models.js');
 const makersData  = require('../../../data/makers.js');
 
 const createMaker = (knex, makersData) => {

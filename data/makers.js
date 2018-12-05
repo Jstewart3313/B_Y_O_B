@@ -96,6 +96,30 @@ let makes = [
     ]
   },
   {
+    name: 'Cadillac',
+    year: 2010,
+    models: [
+      {
+        model: "escalade",
+        displacement: "6.2",
+        engine: "v8",
+        drivetrain: "RWD",
+        horsepower: 403,
+        torque: 417,
+        price: 65000
+      },
+      {
+        model: "CTS",
+        displacement: "3.0",
+        engine: "v6",
+        drivetrain: "RWD",
+        horsepower: 270,
+        torque: 223,
+        price: 38000
+      }
+    ]
+  },
+  {
     name: "Chevrolet",
     year: 1953,
     models: [
@@ -116,6 +140,30 @@ let makes = [
         horsepower: 155,
         torque: 0,
         price: 100000
+      }
+    ]
+  },
+  {
+    name: 'Chrysler',
+    year: 2004,
+    models: [
+        {
+        model: "300",
+        displacement: "3.5",
+        engine: "v6",
+        drivetrain: "RWD",
+        horsepower: 250,
+        torque: 250,
+        price: 30000
+      },
+      {
+        model: "crossfire",
+        displacement: "3.2",
+        engine: "v6",
+        drivetrain: "RWD",
+        horsepower: 215,
+        torque: 229,
+        price: 33000
       }
     ]
   },
@@ -216,6 +264,54 @@ let makes = [
     ]
   },
   {
+    name: "hyundai",
+    year: 2006,
+    models: [
+      {
+        model: "accent",
+        displacement: "3.8",
+        engine: "v6",
+        drivetrain: "FWD",
+        horsepower: 200,
+        torque: 106,
+        price: 13000
+      },
+      {
+        model: "sonata",
+        displacement: "2.4",
+        engine: "I4",
+        drivetrain: "FWD",
+        horsepower: 180,
+        torque: 220,
+        price: 17000
+      }
+    ]
+  },
+  {
+    name: "infiniti",
+    year: 2015,
+    models: [
+      {
+        model: "g30",
+        displacement: "3.7",
+        engine: "v6",
+        drivetrain: "AWD",
+        horsepower: 328,
+        torque: 269,
+        price: 40000
+      },
+      {
+        model: "q60",
+        displacement: "3.7",
+        engine: "v6",
+        drivetrain: "RWD",
+        horsepower: 330,
+        torque: 260,
+        price: 25000
+      }
+    ]
+  },
+  {
     name: "Jaguar",
     year: 2019,
     models: [
@@ -240,6 +336,54 @@ let makes = [
     ]
   },
   {
+    name: "jeep",
+    year: 2013,
+    models: [
+      {
+        model: "grandcherokee",
+        displacement: "3.6",
+        engine: "v6",
+        drivetrain: "AWD",
+        horsepower: 300,
+        torque: 330,
+        price: 27000
+      },
+      {
+        model: "wrangler",
+        displacement: "3.6",
+        engine: "v6",
+        drivetrain: "AWD",
+        horsepower: 285,
+        torque: 260,
+        price: 37000
+      }
+    ]
+  },
+  {
+    name: "kia",
+    year: 2015,
+    models: [
+      {
+        model: "optima",
+        displacement: "2.4",
+        engine: "I4",
+        drivetrain: "FWD",
+        horsepower: 274,
+        torque: 269,
+        price: 23000
+      },
+      {
+        model: "soul",
+        displacement: "1.6",
+        engine: "I4",
+        drivetrain: "FWD",
+        horsepower: 164,
+        torque: 151,
+        price: 14000
+      }
+    ]
+  },
+  {
     name: "Koenigsegg",
     year: 2017,
     models: [
@@ -260,6 +404,30 @@ let makes = [
         horsepower: 1500,
         torque: 1475,
         price: 2100000
+      }
+    ]
+  },
+  {
+    name: "landRover",
+    year: 2016,
+    models: [
+      {
+        model: "Discovery",
+        displacement: "2",
+        engine: "I4",
+        drivetrain: "AWD",
+        horsepower: 240,
+        torque: 250,
+        price: 38000
+      },
+      {
+        model: "evoque",
+        displacement: "2",
+        engine: "I4",
+        drivetrain: "AWD",
+        horsepower: 240,
+        torque: 250,
+        price: 51000
       }
     ]
   },
@@ -312,6 +480,30 @@ let makes = [
     ]
   },
   {
+    name: "mazda",
+    year: 2016,
+    models: [
+      {
+        model: "3hatchback",
+        displacement: "2",
+        engine: "I4",
+        drivetrain: "FWD",
+        horsepower: 184,
+        torque: 185,
+        price: 18000
+      },
+      {
+        model: "cx-3",
+        displacement: "3",
+        engine: "I4",
+        drivetrain: "AWD",
+        horsepower: 146,
+        torque: 146,
+        price: 20000
+      }
+    ]
+  },
+  {
     name: "McLaren",
     year: 2019,
     models: [
@@ -332,6 +524,54 @@ let makes = [
         horsepower: 789,
         torque: 590,
         price: 900000
+      }
+    ]
+  },
+  {
+    name: "mercedes",
+    year: 2013,
+    models: [
+      {
+        model: "AMG GT Coupe",
+        displacement: "6.2",
+        engine: "v8",
+        drivetrain: "RWD",
+        horsepower: 583,
+        torque: 479,
+        price: 200000
+      },
+      {
+        model: "E350",
+        displacement: "3.5",
+        engine: "v6",
+        drivetrain: "AWD",
+        horsepower: 302,
+        torque: 273,
+        price: 28000
+      }
+    ]
+  },
+  {
+    name: "nissan",
+    year: 2009,
+    models: [
+      {
+        model: "370z",
+        displacement: "3.7",
+        engine: "v6",
+        drivetrain: "RWD",
+        horsepower: 350,
+        torque: 276,
+        price: 35000
+      },
+      {
+        model: "skyline GTR",
+        displacement: "3.8",
+        engine: "v6",
+        drivetrain: "AWD",
+        horsepower: 480,
+        torque: 430,
+        price: 80000
       }
     ]
   },
@@ -358,7 +598,79 @@ let makes = [
         price: 90000
       }
     ]
-  }
+  },
+  {
+    name: "saab",
+    year: 2010,
+    models: [
+      {
+        model: "9-5 sedan",
+        displacement: "2.8",
+        engine: "v6",
+        drivetrain: "AWD",
+        horsepower: 300,
+        torque: 295,
+        price: 50000
+      },
+      {
+        model: "9-3x wagon",
+        displacement: "2.0",
+        engine: "I4",
+        drivetrain: "AWD",
+        horsepower: 210,
+        torque: 221,
+        price: 30000
+      }
+    ]
+  },
+  {
+    name: "toyota",
+    year: 2013,
+    models: [
+      {
+        model: "4runner",
+        displacement: "4.0",
+        engine: "v6",
+        drivetrain: "AWD",
+        horsepower: 270,
+        torque: 278,
+        price: 33000
+      },
+      {
+        model: "tundra",
+        displacement: "4.0",
+        engine: "v6",
+        drivetrain: "RWD",
+        horsepower: 331,
+        torque: 401,
+        price: 34000
+      }
+    ]
+  },
+  {
+    name: "subaru",
+    year: 2005,
+    models: [
+      {
+        model: "impreza",
+        displacement: "2.0",
+        engine: "I4",
+        drivetrain: "AWD",
+        horsepower: 227,
+        torque: 217,
+        price: 20000
+      },
+      {
+        model: "wrx",
+        displacement: "2.0",
+        engine: "I4",
+        drivetrain: "AWD",
+        horsepower: 227,
+        torque: 217,
+        price: 32000
+      }
+    ]
+  },
 ];
 
 module.exports = makes;

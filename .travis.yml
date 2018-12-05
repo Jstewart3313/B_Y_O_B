@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- node
+services:
+- postgresql
+before_script:
+- psql -c 'CREATE DATABASE carstest;' -U postgres
+notifications:
+  email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: Ak8dBE4F1pySPB0eAwDiP/OccArp+q1JKSNqypibad0e8Fc7tI3EB93ECtaf3v7p8gpxLDL4FyJ1RLHkxyHPhAR1Vxq4t3uNNMwx9bBrxl9wcCHKKLNxvoygAfRn4gJtN7US///lOGJI8QglRWEo6+1uQH9MBCf3HyKoruHdARPO7uBb9O4Ie4ZKYl4mQo7gy5yNYY1mLOO/EqJvpuJGMXx6s8OoX+ocHv7M8EGkX0mS3uhIfQdARYzQ0W8uQTypKP20ngJNq5pHx65sF1w6GamyNNWIo5E/F+6+DV7N9WsC+cLQEohKZa2PHvV+zlgBTMuSvnRcdDWD/z7Mozb5Z/mX12NO3stdt+4LqoVTlvWNtw9YzkeGCl82Q3ychRSQxAQkQE6EMIWGBhgibGYF4/ynzKYca5thYpFvdy7JYeS8HWQQejpQIwCCgN7sWGL6HB/UrdgfEe1ARWKnamMkvX1wegrQTNVY8ynzRrxViliwwzaL98X2Gc8wPrczIpsAnTz4Vd1CduKdOei3j2ieDcTynJ4Fl0LyiinB9IxMIgjS/0ZgUQJGKZDyMzOhlLWCiU3uauv5TDU8WEzV/XsuDOphQjWaL1Ctd6DnSBC+yIB4XRLTVGALY0iJKkoUuJwGhcXEqzOUmC/8czerWpUH/cnDdmZ5Ikz07B1cS8gTU70=
+  app: byobjustin3313
+  skip_cleanup: true

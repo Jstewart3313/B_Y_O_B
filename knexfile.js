@@ -14,7 +14,7 @@ module.exports = {
   },
   testing: {
     client: 'pg',
-    connection: 'postgres://localhost/carsTest',
+    connection: 'postgres://localhost/carstest',
     migrations: {
       directory: './db/migrations'
     },
@@ -24,7 +24,7 @@ module.exports = {
     useNullAsDefault: true,
   },
   staging: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       database: 'my_db',
       user:     'username',

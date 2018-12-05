@@ -87,7 +87,7 @@ app.post("/api/v1/makers", (request, response) => {
     });
 });
 
-app.post('/api/v1/models', (request, response) => {
+app.post('/api/v1/makers/:id/models', (request, response) => {
   const model = request.body;
 
   for ( let requiredParameters of [
@@ -98,7 +98,7 @@ app.post('/api/v1/models', (request, response) => {
   'horsepower',
   'torque',
   'price', ]) {
-    if(!maker[requiredParameters]) {
+    if(!model[requiredParameters]) {
       return response
         .status(422)
         .send({error: 'There was no Model to add!'})
@@ -106,7 +106,8 @@ app.post('/api/v1/models', (request, response) => {
   }
 
   database("models")
-    .insert( model, 'id')
+    .insert(model, 'id')
+    .where("id", request.params.id)
     .then( newModel => {
       response.status(201).json({id: newModel[0] })
     })

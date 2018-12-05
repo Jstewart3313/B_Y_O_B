@@ -6,10 +6,10 @@ const createMaker = (knex, makersData) => {
     maker: makersData.name,
     year: makersData.year
   }, 'id')
-  .then(makerId => {
+  .then(makerDataId => {
     let vehiclePromises = [];
 
-    vehicleData.forEach(vehicle => {
+    makersData.models.forEach(vehicle => {
       vehiclePromises.push(
         createVehicle(knex, {
           model: vehicle.model,
@@ -19,7 +19,7 @@ const createMaker = (knex, makersData) => {
           horsepower: vehicle.horsepower,
           torque: vehicle.torque,
           price: vehicle.price,
-          maker_id: makerId[0]
+          maker_id: makerDataId[0]
         })
       )
     });

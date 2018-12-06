@@ -87,6 +87,34 @@ app.post("/api/v1/makers", (request, response) => {
     });
 });
 
+app.delete('/api/v1/makers/:maker_id', (request, response) => {
+	const { maker_id } = request.params
+	database('models').where('maker_id', maker_id).delete()
+		.then(() => database('makers').where('id', maker_id).delete())
+		.then(makerId => response.status(200).json({
+			makerId,
+			message: `Maker ${maker_id} has been deleted.`
+		}))
+		.catch(error => response.status(500).json({
+			error: `Error deleting maker: ${error.message}`
+		}))
+});
+
+app.delete('/api/v1/makers/:maker_id/models/:model_id', (request, response) => {
+	const { model_id, maker_id } = request.params
+	database('models').where({
+		'id': model_id,
+		maker_id
+	}).delete()
+		.then(cafe => response.status(200).json({
+				cafe,
+				message: `model ${model_id} for maker ${maker_id} has been deleted.`
+		}))
+		.catch(error => response.status(500).json({
+				error: `Error deleting model: ${error.message}`
+		}))
+})
+
 app.post('/api/v1/makers/:id/models', (request, response) => {
   const model = request.body;
 

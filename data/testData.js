@@ -120,3 +120,5 @@ let makes = [
     ]
   },
 ]
+
+module.exports = makes

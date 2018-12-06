@@ -2,7 +2,7 @@
 
 ### Developers:
 
-Justin Stewart @ justinstewart3313@gmail.com
+Justin Stewart [Github](https://github.com/Jstewart3313)
 
 #### Install and Start Server
 * Clone this repo.

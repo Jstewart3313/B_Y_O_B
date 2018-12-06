@@ -39,6 +39,67 @@ app.get("/api/v1/makers/:id", (request, response) => {
     });
 });
 
+app.post("/api/v1/makers", (request, response) => {
+  const maker = request.body;
+  for (let requiredParameter of ["maker", "year"]) {
+    if (!maker[requiredParameter]) {
+      return response.status(422).send({ error: "There was no Maker to add!" });
+    }
+  }
+  database("makers")
+    .insert(maker, "id")
+    .then(newMaker => {
+      response.status(201).json({ id: newMaker[0] });
+    })
+    .catch(error => {
+      response.status(500).json({ error: error.message });
+    });
+});
+
+app.delete("/api/v1/makers/:maker_id", (request, response) => {
+  const { maker_id } = request.params;
+  database("models")
+    .where("maker_id", maker_id)
+    .delete()
+    .then(() =>
+      database("makers")
+        .where("id", maker_id)
+        .delete()
+    )
+    .then(makerId =>
+      response.status(200).json({
+        makerId,
+        message: `Maker ${maker_id} has been deleted.`
+      })
+    )
+    .catch(error =>
+      response.status(500).json({
+        error: `Error deleting maker: ${error.message}`
+      })
+    );
+});
+app.put('/api/v1/makers/:maker_id', async (request, response) => {
+	const newMaker = request.body.maker;
+	const { maker_id } = request.params
+	const maker = await database('makers').where('id', maker_id).select()
+	let oldMaker;
+
+	if (maker.length) {
+		oldMaker = maker[0].maker
+	}
+
+	database('makers').where('maker', oldMaker).update('maker', newMaker)
+		.then(() => response.status(202).json({
+			message: `Edit successful. Maker with id of ${maker_id} name has been changed from ${oldMaker} to ${newMaker}.`
+		}))
+		.catch(error => {
+			if(!maker.length) return response.status(404).json({ error: `Maker with id of ${maker_id} was not found.`});
+			else if (!newMaker) return response.status(422).json({ error: 'No maker name provided' });
+		})
+})
+
+//------Model End Points------//
+
 app.get("/api/v1/models", (request, response) => {
   database("models")
     .select()
@@ -68,91 +129,66 @@ app.get("/api/v1/models/:id", (request, response) => {
     });
 });
 
-app.post("/api/v1/makers", (request, response) => {
-  const maker = request.body;
-  for (let requiredParameter of ["maker", "year"]) {
-    if (!maker[requiredParameter]) {
-      return response
-        .status(422)
-        .send({ error: "There was no Maker to add!" });
-    }
-  }
-  database("makers")
-    .insert(maker, "id")
-    .then(newMaker => {
-      response.status(201).json({ id: newMaker[0] });
+app.delete("/api/v1/makers/:maker_id/models/:model_id", (request, response) => {
+  const { model_id, maker_id } = request.params;
+  database("models")
+    .where({
+      id: model_id,
+      maker_id
     })
-    .catch(error => {
-      response.status(500).json({ error: error.message });
-    });
+    .delete()
+    .then(cafe =>
+      response.status(200).json({
+        cafe,
+        message: `model ${model_id} for maker ${maker_id} has been deleted.`
+      })
+    )
+    .catch(error =>
+      response.status(500).json({
+        error: `Error deleting model: ${error.message}`
+      })
+    );
 });
 
-app.delete('/api/v1/makers/:maker_id', (request, response) => {
-	const { maker_id } = request.params
-	database('models').where('maker_id', maker_id).delete()
-		.then(() => database('makers').where('id', maker_id).delete())
-		.then(makerId => response.status(200).json({
-			makerId,
-			message: `Maker ${maker_id} has been deleted.`
-		}))
-		.catch(error => response.status(500).json({
-			error: `Error deleting maker: ${error.message}`
-		}))
-});
-
-app.delete('/api/v1/makers/:maker_id/models/:model_id', (request, response) => {
-	const { model_id, maker_id } = request.params
-	database('models').where({
-		'id': model_id,
-		maker_id
-	}).delete()
-		.then(cafe => response.status(200).json({
-				cafe,
-				message: `model ${model_id} for maker ${maker_id} has been deleted.`
-		}))
-		.catch(error => response.status(500).json({
-				error: `Error deleting model: ${error.message}`
-		}))
-})
-
-app.post('/api/v1/makers/:id/models', (request, response) => {
+app.post("/api/v1/makers/:id/models", (request, response) => {
   const model = request.body;
 
-  for ( let requiredParameters of [
-  'model',
-  'displacement',
-  'engine',
-  'drivetrain',
-  'horsepower',
-  'torque',
-  'price', ]) {
-    if(!model[requiredParameters]) {
-      return response
-        .status(422)
-        .send({error: 'There was no Model to add!'})
+  for (let requiredParameters of [
+    "model",
+    "displacement",
+    "engine",
+    "drivetrain",
+    "horsepower",
+    "torque",
+    "price"
+  ]) {
+    if (!model[requiredParameters]) {
+      return response.status(422).send({ error: "There was no Model to add!" });
     }
   }
-
   database("models")
-    .insert({
-      model: model.model,
-      displacement: model.displacement,
-      engine: model.engine,
-      drivetrain: model.drivetrain,
-      horsepower: model.horsepower,
-      torque: model.torque,
-      price: model.price,
-      maker_id: request.params.id
-    }, 'id')
+    .insert(
+      {
+        model: model.model,
+        displacement: model.displacement,
+        engine: model.engine,
+        drivetrain: model.drivetrain,
+        horsepower: model.horsepower,
+        torque: model.torque,
+        price: model.price,
+        maker_id: request.params.id
+      },
+      "id"
+    )
     .where("id", request.params.id)
-    .then( newModel => {
-      response.status(201).json({id: newModel[0] })
+    .then(newModel => {
+      response.status(201).json({ id: newModel[0] });
     })
     .catch(error => {
-      response.status(500).json({ error })
-    })
-    console.log(request.params.id)
-})
+      response.status(500).json({ error });
+    });
+  console.log(request.params.id);
+});
 
 app.listen(app.get("port"), () => {
   console.log(`${app.locals.title} is running on ${app.get("port")}.`);

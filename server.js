@@ -106,7 +106,16 @@ app.post('/api/v1/makers/:id/models', (request, response) => {
   }
 
   database("models")
-    .insert(model, 'id')
+    .insert({
+      model: model.model,
+      displacement: model.displacement,
+      engine: model.engine,
+      drivetrain: model.drivetrain,
+      horsepower: model.horsepower,
+      torque: model.torque,
+      price: model.price,
+      maker_id: request.params.id
+    }, 'id')
     .where("id", request.params.id)
     .then( newModel => {
       response.status(201).json({id: newModel[0] })
@@ -114,6 +123,7 @@ app.post('/api/v1/makers/:id/models', (request, response) => {
     .catch(error => {
       response.status(500).json({ error })
     })
+    console.log(request.params.id)
 })
 
 app.listen(app.get("port"), () => {

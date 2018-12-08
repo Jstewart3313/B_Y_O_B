@@ -1,5 +1,8 @@
 # BYOBackend - Vehicle-by-year API
 
+[![Build Status](https://travis-ci.org/Jstewart3313/BYOB.svg?branch=master)](https://travis-ci.org/Jstewart3313/BYOB)
+
+
 ### Developers:
 
 Justin Stewart [Github](https://github.com/Jstewart3313)

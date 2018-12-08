@@ -78,37 +78,61 @@ app.delete("/api/v1/makers/:maker_id", (request, response) => {
       })
     );
 });
-app.put('/api/v1/makers/:maker_id', async (request, response) => {
-	const newMaker = request.body.maker;
-	const { maker_id } = request.params
-	const maker = await database('makers').where('id', maker_id).select()
-	let oldMaker;
+app.put("/api/v1/makers/:maker_id", async (request, response) => {
+  const newMaker = request.body.maker;
+  const { maker_id } = request.params;
+  const maker = await database("makers")
+    .where("id", maker_id)
+    .select();
+  let oldMaker;
 
-	if (maker.length) {
-		oldMaker = maker[0].maker
-	}
+  if (maker.length) {
+    oldMaker = maker[0].maker;
+  }
 
-	database('makers').where('maker', oldMaker).update('maker', newMaker)
-		.then(() => response.status(202).json({
-			message: `Edit successful. Maker with id of ${maker_id} name has been changed from ${oldMaker} to ${newMaker}.`
-		}))
-		.catch(error => {
-			if(!maker.length) return response.status(404).json({ error: `Maker with id of ${maker_id} was not found.`});
-			else if (!newMaker) return response.status(422).json({ error: 'No maker name provided' });
-		})
-})
+  database("makers")
+    .where("maker", oldMaker)
+    .update("maker", newMaker)
+    .then(() =>
+      response.status(202).json({
+        message: `Edit successful. Maker with id of ${maker_id} name has been changed from ${oldMaker} to ${newMaker}.`
+      })
+    )
+    .catch(error => {
+      if (!maker.length)
+        return response
+          .status(404)
+          .json({ error: `Maker with id of ${maker_id} was not found.` });
+      else if (!newMaker)
+        return response.status(422).json({ error: "No maker name provided" });
+    });
+});
 
 //------Model End Points------//
 
 app.get("/api/v1/models", (request, response) => {
-  database("models")
-    .select()
-    .then(carModels => {
-      response.status(200).json(carModels);
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
+  const { engine } = request.query;
+
+  if (!engine) {
+    database("models")
+      .select()
+      .then(carModels => {
+        response.status(200).json(carModels);
+      })
+      .catch(error => {
+        response.status(500).json({ error });
+      });
+  } else {
+    database("models")
+      .where("engine", engine)
+      .select()
+      .then(models => {
+        return response.status(200).json(models);
+      })
+      .catch(error => {
+        return response.status(500).json({ error });
+      });
+  }
 });
 
 app.get("/api/v1/models/:id", (request, response) => {
@@ -190,28 +214,44 @@ app.post("/api/v1/makers/:id/models", (request, response) => {
   console.log(request.params.id);
 });
 
-app.put('/api/v1/makers/:maker_id/models/:model_id', async (request, response) => {
-	const newModel = request.body.model;
-	const { model_id, maker_id } = request.params
-	const model = await database('models').where({
-		'id': model_id,
-		maker_id
-	}).select()
-	let oldModel;
+app.put(
+  "/api/v1/makers/:maker_id/models/:model_id",
+  async (request, response) => {
+    const newModel = request.body.model;
+    const { model_id, maker_id } = request.params;
+    const model = await database("models")
+      .where({
+        id: model_id,
+        maker_id
+      })
+      .select();
+    let oldModel;
 
-	if (model.length) {
-		oldModel = model[0].model
-	}
+    if (model.length) {
+      oldModel = model[0].model;
+    }
 
-	database('models').where('model', oldModel).update('model', newModel)
-		.then(model => response.status(202).json({
-			model,
-			message: `Edit successful. Model with id of ${model_id} name changed from ${oldModel} to ${newModel}.`}))
-		.catch(error => {
-			if(!model.length) return response.status(404).json({ error: `Model with id of ${model_id} was not found.`});
-			else if (!newModel) return response.status(422).json({ error: 'No model name provided.' });
-		})
-})
+    database("models")
+      .where("model", oldModel)
+      .update("model", newModel)
+      .then(model =>
+        response.status(202).json({
+          model,
+          message: `Edit successful. Model with id of ${model_id} name changed from ${oldModel} to ${newModel}.`
+        })
+      )
+      .catch(error => {
+        if (!model.length)
+          return response
+            .status(404)
+            .json({ error: `Model with id of ${model_id} was not found.` });
+        else if (!newModel)
+          return response
+            .status(422)
+            .json({ error: "No model name provided." });
+      });
+  }
+);
 
 app.listen(app.get("port"), () => {
   console.log(`${app.locals.title} is running on ${app.get("port")}.`);

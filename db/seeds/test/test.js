@@ -1,4 +1,4 @@
-const testData  = require('../../../data/makers.js');
+const testData = require('../../../data/testData.js');
 
 const createMaker = (knex, testData) => {
   return knex('makers').insert({

@@ -33,7 +33,7 @@ app.get("/api/v1/makers/:id", (request, response) => {
         response.status(200).json(carMakers);
       } else {
         response.status(404).json({
-          error: `Could not find project with id ${request.params.id}`
+          error: `Could not find Maker with id ${request.params.id}`
         });
       }
     });
@@ -189,6 +189,29 @@ app.post("/api/v1/makers/:id/models", (request, response) => {
     });
   console.log(request.params.id);
 });
+
+app.put('/api/v1/makers/:maker_id/models/:model_id', async (request, response) => {
+	const newModel = request.body.model;
+	const { model_id, maker_id } = request.params
+	const model = await database('models').where({
+		'id': model_id,
+		maker_id
+	}).select()
+	let oldModel;
+
+	if (model.length) {
+		oldModel = model[0].model
+	}
+
+	database('models').where('model', oldModel).update('model', newModel)
+		.then(model => response.status(202).json({
+			model,
+			message: `Edit successful. Model with id of ${model_id} name changed from ${oldModel} to ${newModel}.`}))
+		.catch(error => {
+			if(!model.length) return response.status(404).json({ error: `Model with id of ${model_id} was not found.`});
+			else if (!newModel) return response.status(422).json({ error: 'No model name provided.' });
+		})
+})
 
 app.listen(app.get("port"), () => {
   console.log(`${app.locals.title} is running on ${app.get("port")}.`);

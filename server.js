@@ -161,9 +161,8 @@ app.delete("/api/v1/makers/:maker_id/models/:model_id", (request, response) => {
       maker_id
     })
     .delete()
-    .then(cafe =>
+    .then(model =>
       response.status(200).json({
-        cafe,
         message: `model ${model_id} for maker ${maker_id} has been deleted.`
       })
     )

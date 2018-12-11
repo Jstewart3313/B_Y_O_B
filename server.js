@@ -16,15 +16,29 @@ app.get("/", (request, response) => {
 });
 
 app.get("/api/v1/makers", (request, response) => {
-  database("makers")
-    .select()
-    .then(carMakers => {
-      response.status(200).json(carMakers);
-    })
-    .catch(error => {
-      response.status(500).json({ error: error.message });
-    });
-});
+  const { maker } = request.query;
+
+  if (maker) {
+    database("makers")
+      .where("maker", maker)
+      .select()
+      .then(makers => {
+        return response.status(200).json(makers);
+      })
+      .catch(error => {
+        return response.status(500).json({ error });
+      });
+  } else {
+    database("makers")
+      .select()
+      .then(carMakers => {
+        response.status(200).json(carMakers);
+      })
+      .catch(error => {
+        response.status(500).json({ error: error.message });
+      });
+  };
+})
 
 app.get("/api/v1/makers/:id", (request, response) => {
   database("makers")

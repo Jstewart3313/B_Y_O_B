@@ -1,7 +1,7 @@
 {
   "name": "BYOB",
   "version": "1.0.0",
-  "description": "",
+  "description": "[![Build Status](https://travis-ci.org/Jstewart3313/BYOB.svg?branch=master)](https://travis-ci.org/Jstewart3313/BYOB)",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
@@ -19,5 +19,16 @@
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
     "mocha": "^5.2.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caseyhoepner/BYOB-1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caseyhoepner/BYOB-1/issues"
+  },
+  "homepage": "https://github.com/caseyhoepner/BYOB-1#readme"
 }

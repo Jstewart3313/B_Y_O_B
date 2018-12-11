@@ -1,35 +1,33 @@
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const environment = process.env.NODE_ENV || "development";
-const configuration = require("./knexfile")[environment];
-const database = require("knex")(configuration);
-const cors = require("cors");
+const express = require('express');
 
-app.set("port", process.env.PORT || 3000);
-app.locals.title = "BYOB";
+const app = express();
+const bodyParser = require('body-parser');
+
+const environment = process.env.NODE_ENV || 'development';
+const cors = require('cors');
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
+
+app.set('port', process.env.PORT || 3000);
+app.locals.title = 'BYOB';
 app.use(bodyParser.json());
+
+app.get('/', (request, response) => {
+  response.send('BYOB');
+});
 app.use(cors());
 
-app.get("/", (request, response) => {
-  response.send("BYOB");
-});
-
-app.get("/api/v1/makers", (request, response) => {
+app.get('/api/v1/makers', (request, response) => {
   const { maker } = request.query;
 
   if (maker) {
-    database("makers")
-      .where("maker", maker)
+    database('makers')
+      .where('maker', maker)
       .select()
-      .then(makers => {
-        return response.status(200).json(makers);
-      })
-      .catch(error => {
-        return response.status(500).json({ error });
-      });
+      .then(makers => response.status(200).json(makers))
+      .catch(error => response.status(500).json({ error }));
   } else {
-    database("makers")
+    database('makers')
       .select()
       .then(carMakers => {
         response.status(200).json(carMakers);
@@ -37,33 +35,34 @@ app.get("/api/v1/makers", (request, response) => {
       .catch(error => {
         response.status(500).json({ error: error.message });
       });
-  };
-})
+  }
+});
 
-app.get("/api/v1/makers/:id", (request, response) => {
-  database("makers")
-    .where("id", request.params.id)
+app.get('/api/v1/makers/:id', (request, response) => {
+  database('makers')
+    .where('id', request.params.id)
     .select()
     .then(carMakers => {
       if (carMakers.length) {
         response.status(200).json(carMakers);
       } else {
         response.status(404).json({
-          error: `Could not find Maker with id ${request.params.id}`
+          error: `Could not find Maker with id ${request.params.id}`,
         });
       }
     });
 });
 
-app.post("/api/v1/makers", (request, response) => {
+app.post('/api/v1/makers', (request, response) => {
   const maker = request.body;
-  for (let requiredParameter of ["maker", "year"]) {
+
+  for (const requiredParameter of ['maker', 'year']) {
     if (!maker[requiredParameter]) {
-      return response.status(422).send({ error: "There was no Maker to add!" });
+      return response.status(422).send({ error: 'There was no Maker to add!' });
     }
   }
-  database("makers")
-    .insert(maker, "id")
+  database('makers')
+    .insert(maker, 'id')
     .then(newMaker => {
       response.status(201).json({ id: newMaker[0] });
     })
@@ -72,33 +71,33 @@ app.post("/api/v1/makers", (request, response) => {
     });
 });
 
-app.delete("/api/v1/makers/:maker_id", (request, response) => {
+app.delete('/api/v1/makers/:maker_id', (request, response) => {
   const { maker_id } = request.params;
-  database("models")
-    .where("maker_id", maker_id)
+  database('models')
+    .where('maker_id', maker_id)
     .delete()
     .then(() =>
-      database("makers")
-        .where("id", maker_id)
-        .delete()
+      database('makers')
+        .where('id', maker_id)
+        .delete(),
     )
     .then(makerId =>
       response.status(200).json({
         makerId,
-        message: `Maker ${maker_id} has been deleted.`
-      })
+        message: `Maker ${maker_id} has been deleted.`,
+      }),
     )
     .catch(error =>
       response.status(500).json({
-        error: `Error deleting maker: ${error.message}`
-      })
+        error: `Error deleting maker: ${error.message}`,
+      }),
     );
 });
-app.put("/api/v1/makers/:maker_id", async (request, response) => {
+app.put('/api/v1/makers/:maker_id', async (request, response) => {
   const newMaker = request.body.maker;
   const { maker_id } = request.params;
-  const maker = await database("makers")
-    .where("id", maker_id)
+  const maker = await database('makers')
+    .where('id', maker_id)
     .select();
   let oldMaker;
 
@@ -106,33 +105,34 @@ app.put("/api/v1/makers/:maker_id", async (request, response) => {
     oldMaker = maker[0].maker;
   }
 
-  database("makers")
-    .where("maker", oldMaker)
-    .update("maker", newMaker)
+  database('makers')
+    .where('maker', oldMaker)
+    .update('maker', newMaker)
     .then(() =>
       response.status(202).json({
-        message: `Edit successful. Maker with id of ${maker_id} name has been changed from ${oldMaker} to ${newMaker}.`
-      })
+        message: `Edit successful. Maker with id of ${maker_id} name has been changed from ${oldMaker} to ${newMaker}.`,
+      }),
     )
-    .catch(error => {
-      if (!maker.length)
+    .catch(() => {
+      if (!maker.length) {
         return response
           .status(404)
           .json({ error: `Maker with id of ${maker_id} was not found.` });
-      else if (!newMaker)
-        return response.status(422).json({ error: "No maker name provided" });
+      } else if (!newMaker) {
+        return response.status(422).json({ error: 'No maker name provided' });
+      }
     });
 });
 
-//------Model End Points------//
+// ------Model End Points------ //
 
-app.get("/api/v1/models", (request, response) => {
+app.get('/api/v1/models', (request, response) => {
   const { engine, price, drivetrain } = request.query;
 
 
   if (price) {
-    database("models")
-      .where("price", price)
+    database('models')
+      .where('price', price)
       .select()
       .then(models => {
         return response.status(200).json(models);
@@ -142,8 +142,8 @@ app.get("/api/v1/models", (request, response) => {
       });
 
   } else if (drivetrain) {
-    database("models")
-      .where("drivetrain", drivetrain)
+    database('models')
+      .where('drivetrain', drivetrain)
       .select()
       .then(models => {
         return response.status(200).json(models);
@@ -152,8 +152,8 @@ app.get("/api/v1/models", (request, response) => {
         return response.status(500).json({ error });
       });
   } else if (engine) {
-    database("models")
-      .where("engine", engine)
+    database('models')
+      .where('engine', engine)
       .select()
       .then(models => {
         return response.status(200).json(models);
@@ -163,7 +163,7 @@ app.get("/api/v1/models", (request, response) => {
       });
 
   } else {
-    database("models")
+    database('models')
       .select()
       .then(carModels => {
         response.status(200).json(carModels);
@@ -174,16 +174,16 @@ app.get("/api/v1/models", (request, response) => {
   }
 });
 
-app.get("/api/v1/models/:id", (request, response) => {
-  database("models")
-    .where("id", request.params.id)
+app.get('/api/v1/models/:id', (request, response) => {
+  database('models')
+    .where('id', request.params.id)
     .select()
     .then(carModels => {
       if (carModels.length) {
         response.status(200).json(carModels);
       } else {
         response.status(404).json({
-          error: `Could not find project with id ${request.params.id}`
+          error: `Could not find project with id ${request.params.id}`,
         });
       }
     })
@@ -192,43 +192,43 @@ app.get("/api/v1/models/:id", (request, response) => {
     });
 });
 
-app.delete("/api/v1/makers/:maker_id/models/:model_id", (request, response) => {
+app.delete('/api/v1/makers/:maker_id/models/:model_id', (request, response) => {
   const { model_id, maker_id } = request.params;
-  database("models")
+  database('models')
     .where({
       id: model_id,
-      maker_id
+      maker_id,
     })
     .delete()
-    .then(model =>
+    .then(() =>
       response.status(200).json({
-        message: `model ${model_id} for maker ${maker_id} has been deleted.`
-      })
+        message: `model ${model_id} for maker ${maker_id} has been deleted.`,
+      }),
     )
     .catch(error =>
       response.status(500).json({
-        error: `Error deleting model: ${error.message}`
-      })
+        error: `Error deleting model: ${error.message}`,
+      }),
     );
 });
 
-app.post("/api/v1/makers/:id/models", (request, response) => {
+app.post('/api/v1/makers/:id/models', (request, response) => {
   const model = request.body;
 
-  for (let requiredParameters of [
-    "model",
-    "displacement",
-    "engine",
-    "drivetrain",
-    "horsepower",
-    "torque",
-    "price"
+  for (const requiredParameters of [
+    'model',
+    'displacement',
+    'engine',
+    'drivetrain',
+    'horsepower',
+    'torque',
+    'price',
   ]) {
     if (!model[requiredParameters]) {
-      return response.status(422).send({ error: "There was no Model to add!" });
+      return response.status(422).send({ error: 'There was no Model to add!' });
     }
   }
-  database("models")
+  database('models')
     .insert(
       {
         model: model.model,
@@ -238,29 +238,28 @@ app.post("/api/v1/makers/:id/models", (request, response) => {
         horsepower: model.horsepower,
         torque: model.torque,
         price: model.price,
-        maker_id: request.params.id
+        maker_id: request.params.id,
       },
-      "id"
+      'id',
     )
-    .where("id", request.params.id)
+    .where('id', request.params.id)
     .then(newModel => {
       response.status(201).json({ id: newModel[0] });
     })
     .catch(error => {
       response.status(500).json({ error });
     });
-  console.log(request.params.id);
 });
 
 app.put(
-  "/api/v1/makers/:maker_id/models/:model_id",
+  '/api/v1/makers/:maker_id/models/:model_id',
   async (request, response) => {
     const newModel = request.body.model;
     const { model_id, maker_id } = request.params;
-    const model = await database("models")
+    const model = await database('models')
       .where({
         id: model_id,
-        maker_id
+        maker_id,
       })
       .select();
     let oldModel;
@@ -269,30 +268,33 @@ app.put(
       oldModel = model[0].model;
     }
 
-    database("models")
-      .where("model", oldModel)
-      .update("model", newModel)
+    database('models')
+      .where('model', oldModel)
+      .update('model', newModel)
       .then(model =>
         response.status(202).json({
           model,
-          message: `Edit successful. Model with id of ${model_id} name changed from ${oldModel} to ${newModel}.`
-        })
+          message: `Edit successful. Model with id of ${model_id} name changed from ${oldModel} to ${newModel}.`,
+        }),
       )
       .catch(error => {
-        if (!model.length)
+        if (!model.length) {
           return response
             .status(404)
             .json({ error: `Model with id of ${model_id} was not found.` });
-        else if (!newModel)
+        } else if (!newModel) {
           return response
             .status(422)
-            .json({ error: "No model name provided." });
+            .json({ error: 'No model name provided.' });
+        } else {
+          return error;
+        }
       });
-  }
+  },
 );
 
-app.listen(app.get("port"), () => {
-  console.log(`${app.locals.title} is running on ${app.get("port")}.`);
+app.listen(app.get('port'), () => {
+  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
 
 module.exports = app;

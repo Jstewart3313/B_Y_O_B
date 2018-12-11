@@ -111,18 +111,31 @@ app.put("/api/v1/makers/:maker_id", async (request, response) => {
 //------Model End Points------//
 
 app.get("/api/v1/models", (request, response) => {
-  const { engine } = request.query;
+  const { engine, price, drivetrain } = request.query;
 
-  if (!engine) {
+
+  if (price) {
     database("models")
+      .where("price", price)
       .select()
-      .then(carModels => {
-        response.status(200).json(carModels);
+      .then(models => {
+        return response.status(200).json(models);
       })
       .catch(error => {
-        response.status(500).json({ error });
+        return response.status(500).json({ error });
       });
-  } else {
+
+  } else if (drivetrain) {
+    database("models")
+      .where("drivetrain", drivetrain)
+      .select()
+      .then(models => {
+        return response.status(200).json(models);
+      })
+      .catch(error => {
+        return response.status(500).json({ error });
+      });
+  } else if (engine) {
     database("models")
       .where("engine", engine)
       .select()
@@ -131,6 +144,16 @@ app.get("/api/v1/models", (request, response) => {
       })
       .catch(error => {
         return response.status(500).json({ error });
+      });
+
+  } else {
+    database("models")
+      .select()
+      .then(carModels => {
+        response.status(200).json(carModels);
+      })
+      .catch(error => {
+        response.status(500).json({ error });
       });
   }
 });

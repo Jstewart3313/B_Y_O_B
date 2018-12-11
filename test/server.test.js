@@ -238,7 +238,28 @@ describe("Server", () => {
           })
       })
 
-
+      it('should return the models that match the price search', done => {
+  
+        chai
+          .request(app)
+          .get('/api/v1/models?price=76000')
+          .end((error, response) => {
+            expect(response).to.have.status(200)
+            expect(response.body.length).to.equal(1)
+            done()
+          })
+      })
+      it('should return the models that match the drivetrain search', done => {
+  
+        chai
+          .request(app)
+          .get('/api/v1/models?drivetrain=AWD')
+          .end((error, response) => {
+            expect(response).to.have.status(200)
+            expect(response.body.length).to.equal(7)
+            done()
+          })
+      })
     });
 
     describe('/api/v1/models/:id', () => {

@@ -4,10 +4,12 @@ const bodyParser = require("body-parser");
 const environment = process.env.NODE_ENV || "development";
 const configuration = require("./knexfile")[environment];
 const database = require("knex")(configuration);
+const cors = require("cors");
 
 app.set("port", process.env.PORT || 3000);
 app.locals.title = "BYOB";
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/", (request, response) => {
   response.send("BYOB");

@@ -61,6 +61,17 @@ describe("Server", () => {
             done();
           });
       });
+
+      it('should return the models that match the price search', done => {
+        chai
+          .request(app)
+          .get('/api/v1/makers?maker=Audi')
+          .end((error, response) => {
+            expect(response).to.have.status(200)
+            expect(response.body.length).to.equal(1)
+            done()
+          })
+      })
     });
 
     describe("/api/v1/makers/:id", () => {
@@ -249,6 +260,7 @@ describe("Server", () => {
             done()
           })
       })
+
       it('should return the models that match the drivetrain search', done => {
   
         chai

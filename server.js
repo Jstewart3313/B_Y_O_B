@@ -4,25 +4,41 @@ const bodyParser = require("body-parser");
 const environment = process.env.NODE_ENV || "development";
 const configuration = require("./knexfile")[environment];
 const database = require("knex")(configuration);
+const cors = require("cors");
 
 app.set("port", process.env.PORT || 3000);
 app.locals.title = "BYOB";
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/", (request, response) => {
   response.send("BYOB");
 });
 
 app.get("/api/v1/makers", (request, response) => {
-  database("makers")
-    .select()
-    .then(carMakers => {
-      response.status(200).json(carMakers);
-    })
-    .catch(error => {
-      response.status(500).json({ error: error.message });
-    });
-});
+  const { maker } = request.query;
+
+  if (maker) {
+    database("makers")
+      .where("maker", maker)
+      .select()
+      .then(makers => {
+        return response.status(200).json(makers);
+      })
+      .catch(error => {
+        return response.status(500).json({ error });
+      });
+  } else {
+    database("makers")
+      .select()
+      .then(carMakers => {
+        response.status(200).json(carMakers);
+      })
+      .catch(error => {
+        response.status(500).json({ error: error.message });
+      });
+  };
+})
 
 app.get("/api/v1/makers/:id", (request, response) => {
   database("makers")

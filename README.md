@@ -51,3 +51,30 @@ DELETE /api/v1/makers/:maker_id/models/:model_id  // delete a vehicle Model
 Project spec can be found [here](http://frontend.turing.io/projects/build-your-own-backend.html).
 
 Feature checklist can be found here [here](http://frontend.turing.io/projects/byob/backend-feature-checklist.html).
+
+# Contributing
+
+## Set up
+
+Be sure that before working you pull from repo. 
+
+`git checkout -b [branch-name]`
+
+## Making a change
+
+Make your changes to the codebase. We recommend using TDD. Add a test, make changes and get the test suite back to green.
+
+Once the tests are passing you can commit your changes.
+
+    `git add .`
+    `git commit -m "Add a concise commit message describing your change here"`
+
+Push your changes to a branch on your fork:
+
+    git push origin branch-name-here
+
+## Submitting a Pull Request
+
+Use the GitHub UI to submit a [new pull request][pr] against upstream/master.
+
+From here, your pull request will progress through the [Review, Test, Merge & Deploy process].

@@ -1,16 +1,19 @@
 {
   "name": "BYOB",
   "version": "1.0.0",
-  "description": "",
+  "description": "[![Build Status](https://travis-ci.org/Jstewart3313/BYOB.svg?branch=master)](https://travis-ci.org/Jstewart3313/BYOB)",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "NODE_ENV=testing node_modules/.bin/mocha --exit"
+    "test": "NODE_ENV=testing node_modules/.bin/mocha --exit",
+    "eslint": "./node_modules/eslint/bin/eslint.js ./*.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "knex": "^0.15.2",
     "pg": "^7.7.1"
@@ -18,6 +21,22 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
     "mocha": "^5.2.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caseyhoepner/BYOB-1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caseyhoepner/BYOB-1/issues"
+  },
+  "homepage": "https://github.com/caseyhoepner/BYOB-1#readme"
 }

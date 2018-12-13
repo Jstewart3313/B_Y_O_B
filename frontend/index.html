@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CARS: Makes and Models</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Montserrat" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>CARS: Makes and Models</h1>
+    <img src="assets/car-front.svg">
+  </header>
+  <main>
+    <h2>API Request Types For Makes</h2>
+      <h3>GET: Get All Car Makes</h3>
+      <div>
+        <h4>Example Call:</h4>
+          <pre><code>https://byobjustin3313.herokuapp.com/api/v1/makers/</code></pre>
+        <h4>Example Response:</h4>
+          <pre><code>
+  [
+    {
+      id: 2,
+      maker: "Audi",
+      year: 2018,
+      created_at: "2018-12-12T17:53:48.302Z",
+      updated_at: "2018-12-12T17:53:48.302Z"
+    },
+    {
+      id: 3,
+      maker: "Bentley",
+      year: 2010,
+      created_at: "2018-12-12T17:53:48.380Z",
+      updated_at: "2018-12-12T17:53:48.380Z"
+    },
+    {
+      id: 4,
+      maker: "BMW",
+      year: 2011,
+      created_at: "2018-12-12T17:53:48.383Z",
+      updated_at: "2018-12-12T17:53:48.383Z"
+    }
+  ]
+          </code></pre>
+      <h3>GET: Get Car Makes By Id</h3>
+        <div>
+          <h4>Required Parameters: </h4>
+            <pre><code>id</code></pre>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/makers/6</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+    [
+      {
+        id: 6,
+        maker: "Chrysler",
+        year: 2004,
+        created_at: "2018-12-12T17:53:48.396Z",
+        updated_at: "2018-12-12T17:53:48.396Z"
+      }
+    ]
+            </code></pre>
+        </div>
+      <h3>POST: Add New Car Make to Database</h3>
+        <div>
+          <h4>Required Parameters: </h4>
+            <pre><code>maker, year</code></pre>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/makers/</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+      {
+        id: 30
+      }
+            </code></pre>
+        </div>
+      <h3>PUT: Make Changes to Existing Car Make</h3>
+        <div>
+          <h4>Required Parameters: </h4>
+            <pre><code>maker, year</code></pre>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/makers/9</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+      {
+        message: "Edit successful. Maker with id of 9 name has been changed from Bugatti to Volkswagen."
+      }
+            </code></pre>
+        </div>
+      <h3>DELETE: Remove Car Make By Id</h3>
+        <div>
+          <h4>Required Parameters: </h4>
+            <pre><code>id</code></pre>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/makers/10</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+      {
+        makerId: 1,
+        message: "Maker 10 has been deleted."
+      }
+            </code></pre>
+        </div>
+    <h2>API Request Types for Models</h2>
+      <h3>GET: Get All Car Models</h3>
+        <div>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/models</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+    [
+      {
+        id: 1,
+        model: "R8",
+        displacement: "5.2",
+        engine: "V10",
+        drivetrain: "AWD",
+        horsepower: 610,
+        torque: 430,
+        price: 175000,
+        created_at: "2018-12-12T17:53:48.488Z",
+        updated_at: "2018-12-12T17:53:48.488Z",
+        maker_id: 2
+      },
+      {
+        id: 2,
+        model: "RS7",
+        displacement: "4",
+        engine: "V8",
+        drivetrain: "AWD",
+        horsepower: 560,
+        torque: 516,
+        price: 125000,
+        created_at: "2018-12-12T17:53:48.489Z",
+        updated_at: "2018-12-12T17:53:48.489Z",
+        maker_id: 2
+      },
+      {
+        id: 3,
+        model: "M5",
+        displacement: "4.4",
+        engine: "V8",
+        drivetrain: "AWD",
+        horsepower: 600,
+        torque: 553,
+        price: 120000,
+        created_at: "2018-12-12T17:53:48.491Z",
+        updated_at: "2018-12-12T17:53:48.491Z",
+        maker_id: 4
+      }
+    ]
+            </code></pre>
+        </div>
+      <h3>GET: Get Car Models By Id</h3>
+        <div>
+          <h4>Required Parameters: </h4>
+            <pre><code>id</code></pre>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/models/4</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+    [
+      {
+        id: 4,
+        model: "Continental GT",
+        displacement: "6",
+        engine: "W12",
+        drivetrain: "AWD",
+        horsepower: 582,
+        torque: 750,
+        price: 220000,
+        created_at: "2018-12-12T17:53:48.492Z",
+        updated_at: "2018-12-12T17:53:48.492Z",
+        maker_id: 3
+      }
+    ]
+            </code></pre>
+        </div>
+      <h3>POST: Add New Car Model to Database</h3>
+        <div>
+          <h4>Required Parameters: </h4>
+            <pre><code>model, displacement, engine, drivetrain, horsepower, torque, price</code></pre>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/models</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+      { 
+        id: 8 
+      }
+            </code></pre>
+        </div>
+      <h3>PUT: Make Changes to Existing Car Model</h3>
+        <div>
+          <h4>Required Parameters: </h4>
+            <pre><code>model, displacement, engine, drivetrain, horsepower, torque, price</code></pre>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/models/5</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+      {
+        model: "Bentayga",
+        message: `Edit successful. Model with id of 5 name changed from Bentayga to Civic.`,
+      }
+            </code></pre>
+        </div>
+      <h3>DELETE: Remove Car Model By Id</h3>
+        <div>
+          <h4>Required Parameters: </h4>
+            <pre><code>id</code></pre>
+          <h4>Example Call:</h4>
+            <pre><code>https://byobjustin3313.herokuapp.com/api/v1/models/7</code></pre>
+          <h4>Example Response:</h4>
+            <pre><code>
+      {
+        message: `model 6 for maker 7 has been deleted.`,
+      }
+            </code></pre>
+        </div>
+  </main>
+</body>
+</html>

@@ -1,21 +1,18 @@
 const express = require('express');
-
 const app = express();
 const bodyParser = require('body-parser');
-
 const environment = process.env.NODE_ENV || 'development';
 const cors = require('cors');
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
-app.set('port', process.env.PORT || 3000);
 app.locals.title = 'BYOB';
-app.use(bodyParser.json());
 
-app.get('/', (request, response) => {
-  response.send('BYOB');
-});
+app.use('/', express.static('frontend'))
+app.use(bodyParser.json());
 app.use(cors());
+
+app.set('port', process.env.PORT || 3000);
 
 app.get('/api/v1/makers', (request, response) => {
   const { maker } = request.query;

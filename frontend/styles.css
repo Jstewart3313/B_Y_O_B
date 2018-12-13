@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 60%;
+  margin: auto;
+  letter-spacing: 2px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  margin: 90px 0;
+}
+
+pre {
+  background: #F0F0F0;
+  padding: 30px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+  overflow: scroll;
+}
+
+code {
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 70px 0;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: 70px 0 40px;
+}
+
+img {
+  height: 150px;
+  width: 150px;
+  margin-left: 50px;
+}
